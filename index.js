@@ -29,16 +29,22 @@ class WebSocketEventWrapper {
         this.listeners.map(method => method(data, client));
     }
 
-    broadcast(data, customFilter = () => true) {
-        [...this.wss.clients]
-            .filter(client => client.readyState === WebSocket.OPEN)
-            .filter(customFilter)
-            .map(client => this.send(data, client));
+    async broadcast(data, customFilter = () => true) {
+        const clients = Array.from(this.wss.clients);
+
+        for (let i = 0; i < clients.length; i += 1) {
+            if (
+                clients[i].readyState === WebSocket.OPEN &&
+                customFilter(clients[i])
+            ) {
+                await this.send(data, clients[i]);
+            }
+        }
     }
 
-    send(data, client) {
+    async send(data, client) {
         if (typeof data === 'function') {
-            this.send(data(client), client);
+            this.send(await data(client), client);
         } else if (typeof data === 'object') {
             this.send(JSON.stringify(data), client);
         } else if (typeof data === 'string') {
