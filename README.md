@@ -23,7 +23,21 @@ const server = new WebSocketEventWrapper({
 });
 
 server.addEventListener((message, client) => {
-    server.broadcast(message);
+    // Broadcast a string to all connections
+    server.broadcast('string');
+    // Broadcast the result of a function call to all connections
+    server.broadcast(client => 'function');
+    // Broadcast the result of an asynchronous function call to all connections
+    server.broadcast(async client => {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        return 'async function';
+    });
+});
+
+server.addEventListener((message, client) => {
+    // Send message to a specific group of connections
+    server.broadcast('string', client => client.roomId === 1);
 });
 ```
 
@@ -34,11 +48,13 @@ server.addEventListener((message, client) => {
 ```javascript
 const socket = new WebSocket('ws://localhost:8080');
 
-socket.addEventListener('open', event => {
+socket.addEventListener('open', () => {
+    // Send a message to the server
     socket.send('Hello Server!');
 });
 
-socket.addEventListener('message', event => {
-    console.log('Message from server ', event.data);
+socket.addEventListener('message', {data} => {
+    // Output all messages from server
+    console.log('Message from server ', data);
 });
 ```
