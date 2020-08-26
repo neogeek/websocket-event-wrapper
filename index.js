@@ -7,6 +7,10 @@ class WebSocketEventWrapper {
         this.wss = new WebSocket.Server({ port, server });
 
         this.wss.on('connection', (client, request) => {
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Client connected');
+            }
+
             client.on('message', data => this.handleMessage(data, client));
             onConnect(client, request);
         });
@@ -21,6 +25,10 @@ class WebSocketEventWrapper {
     }
 
     handleMessage(data, client) {
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`Message received: ${data}`);
+        }
+
         try {
             const json = JSON.parse(data);
 
