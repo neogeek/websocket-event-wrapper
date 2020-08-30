@@ -53,7 +53,7 @@ socket.addEventListener('open', () => {
     socket.send('Hello Server!');
 });
 
-socket.addEventListener('message', {data} => {
+socket.addEventListener('message', ({ data }) => {
     // Output all messages from server
     console.log('Message from server ', data);
 });
