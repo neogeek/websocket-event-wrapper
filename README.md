@@ -2,6 +2,8 @@
 
 > Simple to setup event-based event wrapper for server-side WebSockets.
 
+[![NPM Version](http://img.shields.io/npm/v/websocket-event-wrapper.svg?style=flat)](https://www.npmjs.org/package/websocket-event-wrapper)
+
 ## Install
 
 ```bash
