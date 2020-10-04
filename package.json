@@ -1,7 +1,7 @@
 {
   "name": "websocket-event-wrapper",
   "description": "Simple to setup event-based event wrapper for server-side WebSockets.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "index.js",
   "engines": {
     "node": ">=12.0"
