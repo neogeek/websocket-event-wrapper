@@ -11,7 +11,10 @@ class WebSocketEventWrapper {
                 console.log('Client connected');
             }
 
-            client.on('message', data => this.handleMessage(data, client));
+            client.on('message', (data, isBinary) => {
+                this.handleMessage(isBinary ? data : data.toString(), client);
+            });
+
             onConnect(client, request);
         });
     }
