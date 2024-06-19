@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ws": "8.5.0"
+    "ws": "8.17.1"
   },
   "keywords": [
     "websocket"
